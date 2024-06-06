@@ -12,7 +12,7 @@ function App() {
     if(isRunning){
       intervalId =setInterval(()=>{
         settime (time+1)
-      },100)
+      },1000)
     }
     return()=>clearInterval(intervalId)
   },[time,isRunning])
@@ -33,7 +33,8 @@ function App() {
       <h1>Stopwatch</h1>
       <h3>Time: {minute.toString()}:{second.toString().padStart(2,"0")} </h3>
       <div>
-        <button onClick={startAndStop}>Start</button>
+        <button onClick={startAndStop}>
+          {isRunning? "Stop":"Start"}</button>
         <button onClick={reset}>Reset</button>
       </div>
     </div>
