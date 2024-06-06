@@ -31,7 +31,7 @@ function App() {
   return (
     <div>
       <h1>Stopwatch</h1>
-      Time: {minute.toString()}:{second.toString().padStart(2,"0")}
+      <h3>Time: {minute.toString()}:{second.toString().padStart(2,"0")} </h3>
       <div>
         <button onClick={startAndStop}>
           {isRunning? "Stop":"Start"}</button>
