@@ -2,40 +2,48 @@ import { useEffect, useState } from "react";
 
 function App() {
 
-  const [time, settime] =useState(0)
-  const [isRunning, setIsRunning] =useState(false)
+  const [isRunning, setIsRunning] = useState(false);
+  const [time, setTime] = useState(0);
 
-//  Generally speaking, using setState inside useEffect will create an infinite loop that most likely you don't want to cause. 
-// There are a couple of exceptions to that rule which I will get into later.
-  useEffect (()=>{
-    let intervalId
-    if(isRunning){
-      intervalId =setInterval(()=>{
-        settime (time+1)
-      },1000)
+  useEffect(() => {
+    let intervalId;
+    if (isRunning) {
+      intervalId = setInterval(() => {
+        setTime((prevTime) => prevTime + 1);
+      }, 1000);
+    } else {
+      clearInterval(intervalId);
     }
-    return()=>clearInterval(intervalId)
-  })
 
+    return () => clearInterval(intervalId);
+  }, [isRunning]);
 
-  const startAndStop =() =>{
-    setIsRunning (!isRunning)
-  }
-  const reset =() =>{
-    settime (0)
-  }
+  const handleStartStop = () => {
+    setIsRunning(!isRunning);
+  };
 
-  const minute = Math.floor(time/60)
-  const second = Math.floor(time%60)
+  const handleReset = () => {
+    setIsRunning(false);
+    setTime(0);
+  };
+
+  const formatTime = () => {
+    const minutes = Math.floor(time / 60);
+    const seconds = time % 60;
+    return `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
+  };
 
   return (
     <div>
-      <h1>Stopwatch</h1>
-      <h3>Time: {minute.toString()}:{second.toString().padStart(2,"0")} </h3>
-      <div>
-        <button onClick={startAndStop}>
-          {isRunning? "Stop":"Start"}</button>
-        <button onClick={reset}>Reset</button>
+      <div >
+        <h1>Stopwatch</h1>
+        <div >Time: {formatTime()}</div>
+        <div >
+          <button onClick={handleStartStop}>
+            {isRunning ? "Stop" : "Start"}
+          </button>
+          <button onClick={handleReset}>Reset</button>
+        </div>
       </div>
     </div>
   );
