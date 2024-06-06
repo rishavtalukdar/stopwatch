@@ -15,7 +15,7 @@ function App() {
       },1000)
     }
     return()=>clearInterval(intervalId)
-  },[time,isRunning])
+  })
 
 
   const startAndStop =() =>{
